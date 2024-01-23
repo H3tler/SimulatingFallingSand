@@ -23,13 +23,13 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        graphics.PreferredBackBufferHeight = 1000;
-        graphics.PreferredBackBufferWidth = 800;
+        Height = graphics.PreferredBackBufferHeight = 1000;
+        Width = graphics.PreferredBackBufferWidth = 800;
 
         graphics.ApplyChanges();
 
-        Height = graphics.PreferredBackBufferHeight;
-        Width = graphics.PreferredBackBufferWidth;
+        //Height = graphics.PreferredBackBufferHeight;
+        //Width = graphics.PreferredBackBufferWidth;
 
         size = 10;
 
@@ -48,7 +48,6 @@ public class Game1 : Game
         pixel = new Texture2D(GraphicsDevice, 1, 1);
         pixel.SetData<Color>(new Color[] { Color.White });
 
-        // TODO: use this.Content to load your game content here
     }
 
     protected override void Update(GameTime gameTime)
@@ -64,8 +63,6 @@ public class Game1 : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.Black);
-
-        // TODO: Add your drawing code here
 
         spriteBatch.Begin();
 
@@ -84,14 +81,14 @@ public class Game1 : Game
             int x = mstate.X / size;
             int y = mstate.Y / size;
 
-            if (x >= grid.grid.GetLength(1)) {
-                x = grid.grid.GetLength(1) - 1;
+            if (x >= grid.cols) {
+                x = grid.cols - 1;
             }
             else if (x < 0) {
                 x = 0;
             }
-            if (y >= grid.grid.GetLength(0)) {
-                y = grid.grid.GetLength(0) - 1;
+            if (y >= grid.rows) {
+                y = grid.rows - 1;
             }
             else if (y < 0) {
                 y = 0;
@@ -103,7 +100,7 @@ public class Game1 : Game
         } 
     }
 
-    public static Color HsvToRgb(float h, float s, float v)
+    public static Color HsvToRgb(float h, float s, float v) // Copied from the internet :)
     {
         float r, g, b;
         int i;
