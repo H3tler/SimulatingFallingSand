@@ -1,21 +1,24 @@
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+
 namespace FallingSandSimulator
 {
     public class Grid
     {
-        byte[,] _grid;   
-        int rows;
-        int cols;
+        float[,] _grid;   
+        public int rows {get; private set;}
+        public int cols {get; private set;}
         int size;
-        public byte[,] grid {
+        public float[,] grid {
             get {return _grid;}
-            set {}
         }
 
         public Grid(int rows, int cols)
         {
             this.rows = rows;
             this.cols = cols;
-            _grid =  new byte[rows, cols];
+            _grid =  new float[rows, cols];
 
             for (int r = 0; r < rows; r++) {
                 for (int c = 0; c < cols; c++) {
@@ -25,20 +28,27 @@ namespace FallingSandSimulator
         }
 
         public void DrawGrid(SpriteBatch spriteBatch, Texture2D texture, int size)
-        {
-            
+        {  
+            Random ran = new Random();
+
             for (int r = 0; r < rows; r++){
                 for (int c = 0; c < cols; c++) {
                     if (grid[r, c] > 0) {
-                        spriteBatch.Draw(texture, new Rectangle(c * size, r * size, size, size), Color.White);
+                        Color color = Game1.HsvToRgb(grid[r, c], 1f, 1f);
+                        spriteBatch.Draw(texture, new Rectangle(c * size, r * size, size, size), color);
                     }         
                 }
             }
         }
 
-        public void SetGrid(int x, int y, byte val)
+        public void SetGrid(int x, int y, float val)
         {
             _grid[y, x] = val;
+        }
+
+        public void Gravity()
+        {
+
         }
     }
 }

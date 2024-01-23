@@ -12,6 +12,7 @@ public class Game1 : Game
     public int Height, Width;
     Texture2D pixel;
     int size;
+    float hsv = 0;
 
     public Game1()
     {
@@ -96,10 +97,63 @@ public class Game1 : Game
                 y = 0;
             }
             
-
-            grid.SetGrid(x ,y, 1);
-        }
-        
-        
+            if (hsv > 360) hsv = 0;
+            grid.SetGrid(x ,y, hsv);
+            hsv++;
+        } 
     }
+
+    public static Color HsvToRgb(float h, float s, float v)
+    {
+        float r, g, b;
+        int i;
+        float f, p, q, t;
+        if (s == 0)
+        {
+            return Color.Gray;
+        }
+        h /= 60;           // sector 0 to 5
+        i = (int)h;
+        f = h - i;         // factorial part of h
+        p = v * (1 - s);
+        q = v * (1 - s * f);
+        t = v * (1 - s * (1 - f));
+        switch (i)
+        {
+            case 0:
+                r = v;
+                g = t;
+                b = p;
+                break;
+            case 1:
+                r = q;
+                g = v;
+                b = p;
+                break;
+            case 2:
+                r = p;
+                g = v;
+                b = t;
+                break;
+            case 3:
+                r = p;
+                g = q;
+                b = v;
+                break;
+            case 4:
+                r = t;
+                g = p;
+                b = v;
+                break;
+            default:       // case 5:
+                r = v;
+                g = p;
+                b = q;
+                break;
+        }
+
+        return new Color(r, g, b, 255f);
+    }
+
+    
 }
