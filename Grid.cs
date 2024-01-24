@@ -6,23 +6,20 @@ namespace FallingSandSimulator
 {
     public class Grid
     {
-        float[,] _grid;   
+        public float[,] grid {get; private set;}   
         public int rows {get; private set;}
         public int cols {get; private set;}
         int size;
-        public float[,] grid {
-            get {return _grid;}
-        }
 
         public Grid(int rows, int cols)
         {
             this.rows = rows;
             this.cols = cols;
-            _grid =  new float[rows, cols];
+            grid =  new float[rows, cols];
 
             for (int r = 0; r < rows; r++) {
                 for (int c = 0; c < cols; c++) {
-                    _grid[r, c] = 0;
+                    grid[r, c] = 0;
                 }
             }
         }
@@ -41,12 +38,22 @@ namespace FallingSandSimulator
 
         public void SetGrid(int x, int y, float val)
         {
-            _grid[y, x] = val;
+            grid[y, x] = val;
         }
 
         public void Gravity()
         {
+            float[,] newgrid = grid;
 
+            for (int r = rows - 1; r >= 0; r--) {
+                for (int c = 0; c < cols; c++) {
+                    if (grid[r, c] > 0 && r < rows - 1 && grid[r + 1, c] == 0) {
+                        newgrid[r + 1, c] = grid[r, c];     
+                        newgrid[r, c] = 0f;
+                    }                
+                }
+            }
+            grid = newgrid;
         }
     }
 }

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Vp+Yfs7TbO2t35i0/22oZK8MVhEWdfk8WDSvbP83hieoX347FnLmNOYYXKUj3mjRfot7ZGhWqI5P2BDfuF9/qw==",
+  "success": true,
+  "projectFilePath": "E:\\Work\\MonoGame\\FallingSandSimulator\\FallingSandSimulator.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\pc\\.nuget\\packages\\monogame.content.builder.task\\3.8.1.303\\monogame.content.builder.task.3.8.1.303.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.1.303\\monogame.framework.desktopgl.3.8.1.303.nupkg.sha512"
+  ],
+  "logs": []
+}

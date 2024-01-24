@@ -28,15 +28,9 @@ public class Game1 : Game
 
         graphics.ApplyChanges();
 
-        //Height = graphics.PreferredBackBufferHeight;
-        //Width = graphics.PreferredBackBufferWidth;
-
         size = 10;
 
         grid = new(Height / size, Width / size);
-        
-
-
 
         base.Initialize();
     }
@@ -46,7 +40,7 @@ public class Game1 : Game
         spriteBatch = new SpriteBatch(GraphicsDevice);
 
         pixel = new Texture2D(GraphicsDevice, 1, 1);
-        pixel.SetData<Color>(new Color[] { Color.White });
+        pixel.SetData(new Color[] { Color.White });
 
     }
 
@@ -54,9 +48,10 @@ public class Game1 : Game
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
-
+     
+        grid.Gravity();
         MouseInput();
-
+    
         base.Update(gameTime);
     }
 
@@ -97,7 +92,12 @@ public class Game1 : Game
             if (hsv > 360) hsv = 0;
             grid.SetGrid(x ,y, hsv);
             hsv++;
+            
         } 
+
+        if (Keyboard.GetState().IsKeyDown(Keys.Q)) {
+            //grid.Gravity();
+        }
     }
 
     public static Color HsvToRgb(float h, float s, float v) // Copied from the internet :)
