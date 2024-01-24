@@ -1,7 +1,6 @@
 ﻿global using Microsoft.Xna.Framework;
 global using Microsoft.Xna.Framework.Graphics;
 global using Microsoft.Xna.Framework.Input;
-using System;
 
 namespace FallingSandSimulator;
 
@@ -14,6 +13,8 @@ public class Game1 : Game
     Texture2D pixel;
     int size;
     float hsv = 0;
+    int rad = 1;
+    int scrollvalue;
 
     public Game1()
     {
@@ -33,6 +34,8 @@ public class Game1 : Game
 
         grid = new(Height / size, Width / size);
 
+        scrollvalue = Mouse.GetState().ScrollWheelValue;
+
         base.Initialize();
     }
 
@@ -51,6 +54,7 @@ public class Game1 : Game
             Exit();
 
         grid.Gravity();
+        AdjustPlacementSize();
         MouseInput();
     
         base.Update(gameTime);
@@ -76,29 +80,49 @@ public class Game1 : Game
         if (mstate.LeftButton == ButtonState.Pressed) {
             int x = mstate.X / size;
             int y = mstate.Y / size;
+         
+            hsv++; 
+            if (hsv >= 360) hsv = 1;
+                                                 
+            //grid.SetGrid(x ,y, hsv);
 
-            if (x >= grid.cols) {
-                x = grid.cols - 1;
+            for (int i = x; i < x + rad; i++) {
+                for (int j = y; j < y + rad; j++) {
+                    Vector2 pos = OutofBound(i, j);
+                    grid.SetGrid((int)pos.X, (int)pos.Y, hsv);
+                }
             }
-            else if (x < 0) {
-                x = 0;
-            }
-            if (y >= grid.rows) {
-                y = grid.rows - 1;
-            }
-            else if (y < 0) {
-                y = 0;
-            }
-            
-            if (hsv > 360) hsv = 0;
-            grid.SetGrid(x ,y, hsv);
-            hsv++;
-            
+                        
         } 
 
         if (Keyboard.GetState().IsKeyDown(Keys.Q)) {
-            //grid.Gravity();
+            grid.ResetGrid();
         }
+    }
+
+    public Vector2 OutofBound(int x, int y) 
+    {
+        if (x < 0) x = 0;
+        else if (x >= grid.cols) x = grid.cols - 1;
+        if (y < 0) y = 0;
+        else if (y >= grid.rows) y = grid.rows - 1;
+
+        return new Vector2(x, y);
+    }
+
+    public void AdjustPlacementSize()
+    {
+        var mstate = Mouse.GetState();
+
+        if (mstate.ScrollWheelValue < scrollvalue) {
+            rad--;
+            if (rad < 1) rad = 1;            
+        }
+        if (mstate.ScrollWheelValue > scrollvalue) {
+            rad++;
+            if (rad > 25) rad = 25;
+        }
+        scrollvalue = mstate.ScrollWheelValue;
     }
 
     public static Color HsvToRgb(float h, float s, float v) // Copied from the internet :)
