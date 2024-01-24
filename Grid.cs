@@ -44,7 +44,7 @@ namespace FallingSandSimulator
         public void Gravity()
         {
             float[,] newgrid = grid;
-
+            
             for (int r = rows - 1; r >= 0; r--) {
                 for (int c = 0; c < cols; c++) {
                     if (grid[r, c] > 0 && r < rows - 1 && grid[r + 1, c] == 0) {
@@ -53,7 +53,10 @@ namespace FallingSandSimulator
                     }                
                 }
             }
-            grid = newgrid;
+
+            grid = newgrid;             
         }
+    
     }
+    
 }

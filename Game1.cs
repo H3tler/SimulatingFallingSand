@@ -1,6 +1,7 @@
 ﻿global using Microsoft.Xna.Framework;
 global using Microsoft.Xna.Framework.Graphics;
 global using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace FallingSandSimulator;
 
@@ -28,7 +29,7 @@ public class Game1 : Game
 
         graphics.ApplyChanges();
 
-        size = 10;
+        size = 5;
 
         grid = new(Height / size, Width / size);
 
@@ -48,7 +49,7 @@ public class Game1 : Game
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
-     
+
         grid.Gravity();
         MouseInput();
     
