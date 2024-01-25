@@ -1,3 +1,5 @@
+using System;
+
 namespace FallingSandSimulator
 {
     public class Grid
@@ -53,13 +55,45 @@ namespace FallingSandSimulator
             for (int r = rows - 1; r >= 0; r--) {
                 for (int c = 0; c < cols; c++) {
                     if (grid[r, c] > 0 && r < rows - 1 && grid[r + 1, c] == 0) {
-                        newgrid[r + 1, c] = grid[r, c];     
+                        if (newgrid[r + 1, c] > 0) continue;
+                        newgrid[r + 1, c] = grid[r, c];
                         newgrid[r, c] = 0f;
-                    }                
+                    }
+                    else if (grid[r, c] > 0 && r < rows - 1 && grid[r + 1, c] > 0)
+                    {
+                        newgrid = PushToSide(newgrid, new Vector2(c, r));
+                    }
                 }
             }
 
             grid = newgrid;             
+        }
+
+        private float[,] PushToSide(float[,] someGrid, Vector2 pos)
+        {
+            Random ran = new();
+            int val = ran.Next(0, 2);
+            int y = (int)pos.Y;
+            int x = (int)pos.X;
+            
+            if (val == 1) {
+                for (int j = cols - 1; j > x; j--) {
+                    if (someGrid[y, j] == 0) {
+                        someGrid[y, j] = someGrid[y, j - 1];
+                        someGrid[y, j - 1] = 0;
+                    }
+                }                
+            }
+            else {
+                for (int i = 0; i < x; i++) {
+                    if (someGrid[y, i] == 0) {
+                        someGrid[y, i] = someGrid[y, i + 1];
+                        someGrid[y, i + 1] = 0;
+                    }
+                }
+            }
+            
+            return someGrid;
         }
     
     }
