@@ -53,10 +53,10 @@ public class Game1 : Game
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
-
-        grid.Gravity();
+     
         AdjustPlacementSize();
         MouseInput();
+        grid.Gravity();
     
         base.Update(gameTime);
     }
@@ -96,8 +96,7 @@ public class Game1 : Game
                     if (grid.grid[(int)FinalVec.Y, (int)FinalVec.X] == 0) {
                         grid.SetGrid((int)FinalVec.X, (int)FinalVec.Y, hsv);                       
                     }                                
-                }
-                grid.Gravity();
+                }                
             }
                         
         } 
