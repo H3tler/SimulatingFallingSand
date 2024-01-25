@@ -1,6 +1,7 @@
 ﻿global using Microsoft.Xna.Framework;
 global using Microsoft.Xna.Framework.Graphics;
 global using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace FallingSandSimulator;
 
@@ -86,10 +87,13 @@ public class Game1 : Game
                                                  
             //grid.SetGrid(x ,y, hsv);
 
-            for (int i = x; i < x + rad; i++) {
-                for (int j = y; j < y + rad; j++) {
-                    Vector2 pos = OutofBound(i, j);
-                    grid.SetGrid((int)pos.X, (int)pos.Y, hsv);
+            for (float i = 0; i <= Math.PI * 2; i += 0.05f) {
+                for (int j = 0; j < rad; j++) {
+                    var rot = GetRotation(i, j);
+                    var X = x + rot.X;
+                    var Y = y + rot.Y;
+                    var FinalVec = OutofBound((int)X, (int)Y);
+                    grid.SetGrid((int)FinalVec.X, (int)FinalVec.Y, hsv);
                 }
             }
                         
@@ -98,6 +102,14 @@ public class Game1 : Game
         if (Keyboard.GetState().IsKeyDown(Keys.Q)) {
             grid.ResetGrid();
         }
+    }
+
+    public static Vector2 GetRotation(float angle, float radius)
+    {
+        float x = MathF.Cos(angle) * radius;
+        float y = MathF.Sin(angle) * radius;
+
+        return new Vector2(x, y);
     }
 
     public Vector2 OutofBound(int x, int y) 

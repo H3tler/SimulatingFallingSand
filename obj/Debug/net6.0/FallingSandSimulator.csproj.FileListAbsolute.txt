@@ -24,3 +24,4 @@ E:\Work\MonoGame\FallingSandSimulator\obj\Debug\net6.0\FallingSandSimulator.pdb
 E:\Work\MonoGame\FallingSandSimulator\obj\Debug\net6.0\FallingSandSimulator.genruntimeconfig.cache
 E:\Work\MonoGame\FallingSandSimulator\obj\Debug\net6.0\ref\FallingSandSimulator.dll
 E:\Work\MonoGame\FallingSandSimulator\bin\Debug\net6.0\ColorHelper.dll
+E:\Work\MonoGame\FallingSandSimulator\obj\Debug\net6.0\FallingSandSimulator.sourcelink.json
