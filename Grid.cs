@@ -51,15 +51,19 @@ namespace FallingSandSimulator
         public void Gravity()
         {
             float[,] newgrid = grid;
+            bool fell = false;
             
             for (int r = rows - 1; r >= 0; r--) {
                 for (int c = 0; c < cols; c++) {
-                    if (grid[r, c] > 0 && r < rows - 1 && grid[r + 1, c] == 0) {
-                        if (newgrid[r + 1, c] > 0) continue; 
-                        newgrid[r + 1, c] = grid[r, c];                      
-                        newgrid[r, c] = 0f;     
-                        if (r + 2 < rows && newgrid[r + 2, c] > 0) newgrid = PushToSide(newgrid, new Vector2(c, r + 2));                 
+                    if (newgrid[r, c] > 0 && r < rows - 1 && newgrid[r + 1, c] == 0) {
+                        fell = false;
+                        if (newgrid[r + 1, c] == 0) {
+                            newgrid[r + 1, c] = newgrid[r, c];                      
+                            newgrid[r, c] = 0f; 
+                            fell = true;
+                        }                                                                 
                     }
+                    if (r + 2 < rows && newgrid[r + 2, c] > 0 && fell == true) newgrid = PushToSide(newgrid, new Vector2(c, r + 1));  
                 }                         
             }
 
@@ -73,40 +77,38 @@ namespace FallingSandSimulator
             int y = (int)pos.Y;
             int x = (int)pos.X;
             
-            // if (val == 1) {
-            //     for (int j = cols - 1; j > x; j--) {
-            //         if (someGrid[y, j] == 0) {
-            //             someGrid[y, j] = someGrid[y, j - 1];
-            //             someGrid[y, j - 1] = 0;
-            //         }
-            //     }                
-            // }
-            // else {
-            //     for (int i = 0; i < x; i++) {
-            //         if (someGrid[y, i] == 0) {
-            //             someGrid[y, i] = someGrid[y, i + 1];
-            //             someGrid[y, i + 1] = 0;
-            //         }
-            //     }
-            // }
-
             if (val == 1) {
+                int xx = 0;
                 for (int i = x; i < cols - 1; i++) {
                     if (someGrid[y, i + 1] == 0) {
-                        someGrid[y, i + 1] = someGrid[y, i];
-                        someGrid[y, i] = 0;
-                        return someGrid;
+                        xx = i + 1;
+                        break;
+                    }                   
+                }
+                if (xx != 0) {
+                    for (int i = x; i < xx; i++) {
+                        if (someGrid[y, i + 1] == 0) {
+                            someGrid[y, i + 1] = someGrid[y, i];
+                            someGrid[y, i] = 0;
+                        }            
                     }
-                    
                 }
             }   
             else {
-                for (int i = x; i >= 1; i--) {
+                int xx = cols;
+                for (int i = x; i > 0; i--) {
                     if (someGrid[y, i - 1] == 0) {
-                        someGrid[y, i - 1] = someGrid[y, i];
-                        someGrid[y, i] = 0;
-                        return someGrid;
-                    }            
+                        xx = i - 1;
+                        break;
+                    }                   
+                }
+                if (xx != cols) {
+                    for (int i = x; i > xx; i--) {
+                        if (someGrid[y, i - 1] == 0) {
+                            someGrid[y, i - 1] = someGrid[y, i];
+                            someGrid[y, i] = 0;
+                        }            
+                    }
                 }
             }
             
