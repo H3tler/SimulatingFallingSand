@@ -94,9 +94,10 @@ public class Game1 : Game
                     var Y = y + rot.Y;
                     var FinalVec = OutofBound((int)X, (int)Y);
                     if (grid.grid[(int)FinalVec.Y, (int)FinalVec.X] == 0) {
-                        grid.SetGrid((int)FinalVec.X, (int)FinalVec.Y, hsv);
+                        grid.SetGrid((int)FinalVec.X, (int)FinalVec.Y, hsv);                       
                     }                                
                 }
+                grid.Gravity();
             }
                         
         } 
