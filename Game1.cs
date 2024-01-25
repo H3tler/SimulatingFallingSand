@@ -57,7 +57,7 @@ public class Game1 : Game
         AdjustPlacementSize();
         MouseInput();
         grid.Gravity();
-    
+        
         base.Update(gameTime);
     }
 
